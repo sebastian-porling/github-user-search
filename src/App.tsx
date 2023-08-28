@@ -4,11 +4,20 @@ import {
   ServiceContextProvider,
   defaultServices,
 } from "./Context/ServiceContext";
+import { IGithubUser } from "./Model/GithubUser";
+import { CurrentUserContextProvider } from "./Context/CurrentUserContext";
 
 function App() {
+  const [currentUser, setCurrentUser] = React.useState<IGithubUser>();
+
   return (
     <ServiceContextProvider {...defaultServices}>
-      <div className="app" data-testid="app"></div>
+      <CurrentUserContextProvider
+        currentUser={currentUser}
+        changeCurrentUser={(user) => setCurrentUser(user)}
+      >
+        <div className="app" data-testid="app"></div>
+      </CurrentUserContextProvider>
     </ServiceContextProvider>
   );
 }
