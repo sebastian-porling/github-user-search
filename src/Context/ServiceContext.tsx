@@ -23,4 +23,4 @@ export const ServiceContextProvider: React.FC<
   );
 };
 
-export const userServiceContext = () => React.useContext(ServiceContext);
+export const useServiceContext = () => React.useContext(ServiceContext);
