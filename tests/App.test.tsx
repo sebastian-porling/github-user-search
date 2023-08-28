@@ -9,8 +9,8 @@ describe("App", () => {
     testCase = new AppTestCase();
   });
 
-  test("renders learn react link", () => {
-    expect(testCase.link.textContent).toBe("Learn React");
+  test("renders app component", () => {
+    expect(testCase.app).toBeDefined();
   });
 });
 
@@ -21,7 +21,7 @@ class AppTestCase extends BaseTestCase {
     super.doRender(<App />);
   }
 
-  get link() {
-    return this.container.getByTestId("link");
+  get app() {
+    return this.container.getByTestId("app");
   }
 }
