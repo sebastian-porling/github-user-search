@@ -40,7 +40,6 @@ class GithubUser {
   static fromJS(data?: any) {
     data = typeof data === "object" ? data : {};
     let result = new GithubUser();
-    console.log(data);
     result.init(data);
     return result;
   }
