@@ -24,7 +24,6 @@ function SearchBar() {
       try {
         const newUser = await githubClient.getUserByUsername(currentUsername);
         changeCurrentUser(newUser);
-        console.log(newUser);
       } catch (error) {}
     },
     [currentUsername]
