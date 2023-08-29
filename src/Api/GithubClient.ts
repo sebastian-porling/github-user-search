@@ -1,7 +1,7 @@
-import { GithubUser } from "$/Model/GithubUser";
+import { GithubUser, IGithubUser } from "$/Model/GithubUser";
 
 export interface IGithubClient {
-  getUserByUsername(username: string): Promise<GithubUser>;
+  getUserByUsername(username: string): Promise<IGithubUser>;
 }
 
 export class GithubClient implements IGithubClient {
@@ -9,7 +9,7 @@ export class GithubClient implements IGithubClient {
     private readonly baseUri: string = "https://api.github.com/users/"
   ) {}
 
-  async getUserByUsername(username: string): Promise<GithubUser> {
+  async getUserByUsername(username: string): Promise<IGithubUser> {
     return fetch(`${this.baseUri}${username}`).then((response) => {
       const status = response.status;
       if (status === 200) {
