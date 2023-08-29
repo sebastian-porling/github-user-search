@@ -6,6 +6,7 @@ import {
 } from "./Context/ServiceContext";
 import { IGithubUser } from "./Model/GithubUser";
 import { CurrentUserContextProvider } from "./Context/CurrentUserContext";
+import { SearchBar } from "./Components/SearchBar";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState<IGithubUser>();
@@ -16,7 +17,9 @@ function App() {
         currentUser={currentUser}
         changeCurrentUser={(user) => setCurrentUser(user)}
       >
-        <div className="app" data-testid="app"></div>
+        <div className="app" data-testid="app">
+          <SearchBar />
+        </div>
       </CurrentUserContextProvider>
     </ServiceContextProvider>
   );
