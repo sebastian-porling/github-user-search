@@ -1,5 +1,5 @@
 import { IGithubClient } from "$/Api/GithubClient";
-import { IGithubUser, GithubUser } from "$/Model/GithubUser";
+import { IGithubUser } from "$/Model/GithubUser";
 
 export class FakeGithubClient implements IGithubClient {
   public returnGetUserByUsername: IGithubUser | undefined = undefined;
@@ -9,6 +9,6 @@ export class FakeGithubClient implements IGithubClient {
       return Promise.resolve(this.returnGetUserByUsername);
     }
 
-    return Promise.reject();
+    return Promise.reject({ message: "user not found" });
   }
 }

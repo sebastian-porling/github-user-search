@@ -1,13 +1,17 @@
 .search-bar {
     display: flex;
+    flex-direction: column;
     width: 100%;
     --font-size: 2rem;
     --border-radius: 0.5rem;
 }
 
+.error-text {
+    color: red;
+}
+
 .search-bar form {
     display: flex;
-    width: 100%;
     position: relative;
     margin-inline: 2rem;
     gap: 1rem;
@@ -20,6 +24,11 @@
     padding-block: 0.5rem;
     border-radius: var(--border-radius);
     font-size: var(--font-size);
+    border: 1p solid transparent;
+}
+
+.search-bar__input.has-error {
+    border-color: red;
 }
 
 .search-bar__icon {

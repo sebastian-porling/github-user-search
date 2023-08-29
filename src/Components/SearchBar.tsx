@@ -9,13 +9,16 @@ function SearchBar() {
   const [currentUsername, setCurrentUsername] = React.useState("");
   const currentUsernameIsEmpty = currentUsername.length === 0;
   const { changeCurrentUser } = useCurrentUserContext();
+  const [error, setError] = React.useState("");
 
   const handleChangeUsername: React.ChangeEventHandler<HTMLInputElement> = (
     event
   ) => {
     const username = event.currentTarget.value;
     if (!username) return;
+    changeCurrentUser(undefined);
     setCurrentUsername(username);
+    setError("");
   };
 
   const handleSubmit = React.useCallback<FormEventHandler<HTMLFormElement>>(
@@ -24,13 +27,20 @@ function SearchBar() {
       try {
         const newUser = await githubClient.getUserByUsername(currentUsername);
         changeCurrentUser(newUser);
-      } catch (error) {}
+      } catch (error: any & { message: string }) {
+        setError(error.message);
+      }
     },
     [currentUsername]
   );
 
   return (
     <div className="search-bar">
+      {error && (
+        <p className="error-text" data-testid="error-text">
+          {error}
+        </p>
+      )}
       <form onSubmit={handleSubmit}>
         <img
           src={GithubIcon}
@@ -41,7 +51,7 @@ function SearchBar() {
           type="text"
           data-testid="search-bar-input"
           onChange={handleChangeUsername}
-          className="search-bar__input"
+          className={`search-bar__input ${error ? "has-error" : ""}`}
           placeholder="enter username"
         />
         <button

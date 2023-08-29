@@ -36,6 +36,14 @@ describe("SearchBar", () => {
       it("should be a disabled submit button", () => {
         expect(testCase.submitButton.isDisabled()).toBe(true);
       });
+
+      it("should not be any error text visible", () => {
+        expect(() => testCase.errorText).toThrow();
+      });
+
+      it("should not have any error class on input", () => {
+        expect(testCase.searchBar.classList).not.toContain("has-error");
+      });
     });
 
     describe("When entering a username", () => {
@@ -63,6 +71,14 @@ describe("SearchBar", () => {
           });
         });
 
+        it("should not be any error text visible", () => {
+          expect(() => testCase.errorText).toThrow();
+        });
+
+        it("should not have any error class on input", () => {
+          expect(testCase.searchBar.classList).not.toContain("has-error");
+        });
+
         describe("through pressing enter", () => {
           beforeEach(async () => {
             testCase.changeCurrentUserSpy.mockClear();
@@ -81,6 +97,21 @@ describe("SearchBar", () => {
           it("have called the change current user mock", () => {
             expect(testCase.changeCurrentUserSpy).toHaveBeenCalled();
           });
+        });
+      });
+
+      describe("When submitting with a user that doesn't exist", () => {
+        beforeEach(async () => {
+          testCase.fakeGithubClient.returnGetUserByUsername = undefined;
+          await testCase.searchBar.pressEnter();
+        });
+
+        it("should have a error text visible", () => {
+          expect(testCase.errorText.textContent).toBe("user not found");
+        });
+
+        it("should have error class on input", () => {
+          expect(testCase.searchBar.classList).toContain("has-error");
         });
       });
     });
@@ -114,5 +145,9 @@ class SearchBarTestCase extends BaseTestCase {
 
   get submitButton() {
     return this.container.getByTestId("search-bar-submit");
+  }
+
+  get errorText() {
+    return this.container.getByTestId("error-text");
   }
 }
